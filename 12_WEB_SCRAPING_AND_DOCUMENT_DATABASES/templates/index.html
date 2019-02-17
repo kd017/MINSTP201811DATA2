@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mission to Mars</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="jumbotron text-center">
+      <h1>Mission to Mars</h1>
+      <p>continuous flow of scientific information...</p>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Refresh Data!</a></p>
+    </div>
+    {% if mars_data is defined %}
+    <div class="container">
+      <div class="row" id="news">
+        <h2>Latest Mars News</h2>
+        <h3>{{mars_data.news_title}} <a class="badge badge-info" href="{{ mars_data.news_href }}"
+            target="_blank">read</a></h3>
+        <p>{{mars_data.news_p}}</p>
+      </div>
+      <div class="row" id="other">
+        <div class="col-md-8 align-top">
+          <h2>Featured Image</h2>
+          <img class="img-fluid" src="{{ mars_data.featured_image_url }}" width="100%" alt="Featured Image">
+        </div>
+        <div class="col-md-4 align-top">
+          <div id="weather">
+            <h3>Current Weather on Mars</h3>
+            <blockquote class="blockquote">
+              <p class="text-small">{{ mars_data.mars_weather }}</p>
+            </blockquote>
+          </div>
+          <div id="facts">
+            <h3>Mars Facts</h3>
+            {{ mars_data.mars_profile_html|safe }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <h2 class="text-center">Mars Hemispheres</h2>
+        {% for hs_img in mars_data.hemisphere_image_urls %}
+        <div class="card col-md-6 col-sm-6">
+          <img class="card-img-top" src="{{ hs_img.img_url }}" width="100%" title="{{ hs_img.title }}"
+            alt="{{ hs_img.title }}">
+          <div class="card-body">
+            <h4 class="card-title text-center">{{ hs_img.title }}</h4>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  <div class="fixed-bottom">
+      <br>
+      <p class="bg-info text-center"><small>© KD017@Data Bootcamp - University of Minnesota, All
+          Rights Reserved 2019</small>
+      </p>
+    </div>
+</body>
+
+</html>
